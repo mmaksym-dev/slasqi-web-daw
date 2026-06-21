@@ -1,17 +1,62 @@
 <!DOCTYPE html>
 <html lang="pl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Advanced Hybrid Micro DAW</title>
     <style>
-        * { box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #0b0b10; color: #e2e2e9; padding: 15px; margin: 0; }
-        .daw-container { max-width: 100%; width: 800px; margin: 0 auto; background: #14141f; padding: 20px; border-radius: 16px; box-shadow: 0 12px 40px rgba(0,0,0,0.6); border: 1px solid #232335; }
-        h2 { color: #00ebc7; margin-top: 0; border-bottom: 2px solid #232335; padding-bottom: 12px; font-size: 1.6rem; text-align: center; text-shadow: 0 0 10px rgba(0, 235, 199, 0.2); }
-        h3 { font-size: 1.1rem; margin-top: 0; color: #fff; display: flex; align-items: center; gap: 8px; }
-        .section { background: #1b1b2a; padding: 15px; margin: 15px 0; border-radius: 10px; border-left: 4px solid #00ebc7; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
-        
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: #0b0b10;
+            color: #e2e2e9;
+            padding: 15px;
+            margin: 0;
+        }
+
+        .daw-container {
+            max-width: 100%;
+            width: 800px;
+            margin: 0 auto;
+            background: #14141f;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+            border: 1px solid #232335;
+        }
+
+        h2 {
+            color: #00ebc7;
+            margin-top: 0;
+            border-bottom: 2px solid #232335;
+            padding-bottom: 12px;
+            font-size: 1.6rem;
+            text-align: center;
+            text-shadow: 0 0 10px rgba(0, 235, 199, 0.2);
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            margin-top: 0;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section {
+            background: #1b1b2a;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 10px;
+            border-left: 4px solid #00ebc7;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
         /* Transport Bar Styling */
         .transport-bar {
             display: flex;
@@ -23,10 +68,12 @@
             gap: 15px;
             flex-wrap: wrap;
         }
+
         .transport-buttons {
             display: flex;
             gap: 8px;
         }
+
         .transport-btn {
             background: #252538;
             color: #e2e2e9;
@@ -40,14 +87,17 @@
             justify-content: center;
             gap: 6px;
         }
+
         .transport-btn:hover:not(:disabled) {
             background: #32324c;
             border-color: #00ebc7;
             color: #fff;
         }
+
         #playBtn {
             min-width: 120px;
         }
+
         .time-display {
             font-family: 'Courier New', Courier, monospace;
             font-size: 1.25rem;
@@ -59,9 +109,9 @@
             border: 1px solid #232335;
             text-align: center;
             letter-spacing: 1px;
-            box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.5);
         }
-        
+
         /* Track Grid Layout */
         .track-row {
             background: #1e1e2f;
@@ -75,25 +125,30 @@
             align-items: center;
             transition: border-color 0.25s ease;
         }
+
         .track-row:hover {
             border-color: #3d3d5c;
         }
+
         .track-info {
             display: flex;
             flex-direction: column;
             gap: 6px;
         }
+
         .track-title {
             font-weight: bold;
             font-size: 0.85rem;
             color: #a5a5b5;
         }
+
         .track-mix-controls {
             display: flex;
             align-items: center;
             gap: 8px;
             margin-top: 4px;
         }
+
         .mix-btn {
             width: 32px;
             height: 32px;
@@ -111,22 +166,26 @@
             cursor: pointer;
             transition: all 0.2s ease;
         }
+
         .mix-btn:hover {
             border-color: #5a5a7c;
             color: #fff;
         }
+
         .mix-btn.active-mute {
             background: #ff5e7e;
             color: #fff;
             border-color: #ff5e7e;
             box-shadow: 0 0 8px rgba(255, 94, 126, 0.4);
         }
+
         .mix-btn.active-solo {
             background: #00ebc7;
             color: #101015;
             border-color: #00ebc7;
             box-shadow: 0 0 8px rgba(0, 235, 199, 0.4);
         }
+
         .vol-slider-container {
             display: flex;
             align-items: center;
@@ -135,6 +194,7 @@
             font-size: 0.75rem;
             color: #a5a5b5;
         }
+
         .vol-slider {
             width: 100%;
             height: 5px;
@@ -143,6 +203,7 @@
             outline: none;
             -webkit-appearance: none;
         }
+
         .vol-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
             width: 12px;
@@ -150,12 +211,14 @@
             border-radius: 50%;
             background: #00ebc7;
             cursor: pointer;
-            box-shadow: 0 0 4px rgba(0,235,199,0.5);
+            box-shadow: 0 0 4px rgba(0, 235, 199, 0.5);
             transition: background 0.2s;
         }
+
         .vol-slider::-webkit-slider-thumb:hover {
             background: #00ffda;
         }
+
         .waveform-container {
             position: relative;
             background: #0b0b10;
@@ -165,11 +228,13 @@
             overflow: hidden;
             cursor: pointer;
         }
+
         .waveform-canvas {
             width: 100%;
             height: 100%;
             display: none;
         }
+
         .waveform-placeholder {
             position: absolute;
             top: 50%;
@@ -180,6 +245,7 @@
             pointer-events: none;
             font-style: italic;
         }
+
         .playhead-overlay {
             position: absolute;
             top: 0;
@@ -193,19 +259,166 @@
             display: none;
             z-index: 5;
         }
-        
-        input[type="file"] { width: 100%; color: #aaac; font-size: 0.8rem; margin-top: 3px; }
-        button { background: #00ebc7; color: #101015; font-weight: bold; border: none; padding: 12px; border-radius: 6px; cursor: pointer; transition: all 0.2s ease; width: 100%; margin-top: 5px; font-size: 0.9rem; }
-        button:disabled { background: #252535; color: #55556a; cursor: not-allowed; border: 1px solid #1b1b2a; }
-        button:hover:not(:disabled) { background: #00ffda; box-shadow: 0 0 10px rgba(0,255,218,0.3); }
-        select, input[type="number"] { background: #0b0b10; border: 1px solid #2e2e44; color: #fff; padding: 10px; border-radius: 6px; width: 100%; font-size: 0.9rem; }
-        select:focus, input[type="number"]:focus { outline: none; border-color: #00ebc7; }
-        .status { font-weight: bold; color: #ff5e7e; text-align: center; display: block; margin-top: 5px; text-shadow: 0 0 8px rgba(255,94,126,0.3); }
-        .click-preview { background: #0b0b10; height: 35px; border-radius: 4px; margin-top: 10px; position: relative; overflow: hidden; border: 1px solid #232335; }
-        .transient-marker { position: absolute; width: 2px; height: 100%; background: #00ebc7; top: 0; box-shadow: 0 0 4px #00ebc7; }
-        .latency-box { background: #181827; padding: 12px; border-radius: 8px; margin-top: 10px; border: 1px solid #25253a; }
-        .download-btn { color: #101015; background: #ff5e7e; text-decoration: none; font-weight: bold; padding: 12px; display: block; text-align: center; border-radius: 6px; margin-top: 10px; transition: background 0.2s, box-shadow 0.2s; }
-        .download-btn:hover { background: #ff7893; box-shadow: 0 0 12px rgba(255, 94, 126, 0.4); }
+
+        input[type="file"] {
+            width: 100%;
+            color: #aaac;
+            font-size: 0.8rem;
+            margin-top: 3px;
+        }
+
+        button {
+            background: #00ebc7;
+            color: #101015;
+            font-weight: bold;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: 100%;
+            margin-top: 5px;
+            font-size: 0.9rem;
+        }
+
+        button:disabled {
+            background: #252535;
+            color: #55556a;
+            cursor: not-allowed;
+            border: 1px solid #1b1b2a;
+        }
+
+        button:hover:not(:disabled) {
+            background: #00ffda;
+            box-shadow: 0 0 10px rgba(0, 255, 218, 0.3);
+        }
+
+        select,
+        input[type="number"] {
+            background: #0b0b10;
+            border: 1px solid #2e2e44;
+            color: #fff;
+            padding: 10px;
+            border-radius: 6px;
+            width: 100%;
+            font-size: 0.9rem;
+        }
+
+        select:focus,
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #00ebc7;
+        }
+
+        .status {
+            font-weight: bold;
+            color: #ff5e7e;
+            text-align: center;
+            display: block;
+            margin-top: 5px;
+            text-shadow: 0 0 8px rgba(255, 94, 126, 0.3);
+        }
+
+        .click-preview {
+            background: #0b0b10;
+            height: 35px;
+            border-radius: 4px;
+            margin-top: 10px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #232335;
+        }
+
+        .transient-marker {
+            position: absolute;
+            width: 2px;
+            height: 100%;
+            background: #00ebc7;
+            top: 0;
+            box-shadow: 0 0 4px #00ebc7;
+        }
+
+        .latency-box {
+            background: #181827;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 10px;
+            border: 1px solid #25253a;
+        }
+
+        .download-btn {
+            color: #101015;
+            background: #ff5e7e;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 12px;
+            display: block;
+            text-align: center;
+            border-radius: 6px;
+            margin-top: 10px;
+            transition: background 0.2s, box-shadow 0.2s;
+        }
+
+        .download-btn:hover {
+            background: #ff7893;
+            box-shadow: 0 0 12px rgba(255, 94, 126, 0.4);
+        }
+
+        /* Options Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(11, 11, 16, 0.85);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: #14141f;
+            border: 1px solid #232335;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 500px;
+            padding: 25px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .close-modal-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 2rem;
+            color: #a5a5b5;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .close-modal-btn:hover {
+            color: #ff5e7e;
+        }
+
+        .modal-section {
+            background: #1b1b2a;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 10px;
+            border-left: 4px solid #00ebc7;
+        }
+
+        .record-btn:hover {
+            background: #ff7893 !important;
+            box-shadow: 0 0 10px rgba(255, 94, 126, 0.4);
+        }
+
         @media (max-width: 700px) {
             .track-row {
                 grid-template-columns: 1fr;
@@ -214,169 +427,219 @@
         }
     </style>
 </head>
+
 <body>
 
-<div class="daw-container">
-    <h2>🎛️ Advanced Micro DAW</h2>
+    <div class="daw-container">
+        <h2>🎛️ Advanced Micro DAW</h2>
 
-    <!-- Panel Transportu (Transport Controls) -->
-    <div class="section transport-bar">
-        <div class="transport-buttons">
-            <button id="rewindBtn" class="transport-btn" title="Przewiń do początku">⏮️ Początek</button>
-            <button id="playBtn" class="transport-btn" title="Odtwórz / Pauza">▶️ Odtwórz</button>
-            <button id="stopBtn" class="transport-btn" title="Zatrzymaj">⏹️ Stop</button>
+        <!-- Panel Transportu (Transport Controls) -->
+        <div class="section transport-bar">
+            <div class="transport-buttons">
+                <button id="initAudio" class="transport-btn" title="Zezwól na Audio (Silnik DAW)">🔌 Silnik DAW</button>
+                <button id="rewindBtn" class="transport-btn" title="Przewiń do początku">⏮️ Początek</button>
+                <button id="playBtn" class="transport-btn" title="Odtwórz / Pauza">▶️ Odtwórz</button>
+                <button id="stopBtn" class="transport-btn" title="Zatrzymaj">⏹️ Stop</button>
+                <button id="optionsBtn" class="transport-btn" title="Ustawienia i Narzędzia">⚙️ Opcje</button>
+            </div>
+            <div class="time-display" id="timeDisplay">00:00.00 / 00:00.00</div>
         </div>
-        <div class="time-display" id="timeDisplay">00:00.00 / 00:00.00</div>
-    </div>
 
-    <!-- 1. Urządzenia i opóźnienia -->
-    <div class="section">
-        <h3>1. Wejście Audio & Latencja</h3>
-        <div style="display: flex; flex-direction: column; gap: 8px;">
-            <label>Urządzenie wejściowe:</label>
-            <select id="deviceSelect">
-                <option value="">Wyszukaj urządzenia...</option>
-            </select>
-            <button id="scanDevices">Odśwież Listę Urządzeń</button>
-        </div>
-        
-        <div class="latency-box">
-            <button id="autoLatencyBtn" style="background: #ff5e7e; color: white;">Autokalibracja Latencji (Ping)</button>
-            <div style="margin-top: 10px; display: flex; align-items: center; gap: 10px;">
-                <label style="white-space: nowrap;">Kompensacja:</label>
-                <input type="number" id="latencyMs" value="0">
-                <span>ms</span>
+        <!-- Główne Parametry Utworu (BPM & Metrum) -->
+        <div class="section song-params-bar"
+            style="display: flex; gap: 15px; align-items: center; justify-content: space-between; border-left-color: #00ebc7; padding: 12px 15px;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="font-weight: bold; font-size: 0.9rem; color: #a5a5b5;">BPM:</span>
+                <input type="number" id="bpmInput" value="120" min="40" max="240"
+                    style="width: 80px; padding: 6px; font-size: 0.9rem; border-radius: 4px; text-align: center;">
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="font-weight: bold; font-size: 0.9rem; color: #a5a5b5;">Metrum:</span>
+                <select id="metrumSelect" style="width: 90px; padding: 6px; font-size: 0.9rem; border-radius: 4px;">
+                    <option value="4/4" selected>4/4</option>
+                    <option value="3/4">3/4</option>
+                    <option value="2/4">2/4</option>
+                    <option value="6/8">6/8</option>
+                </select>
             </div>
         </div>
-    </div>
 
-    <!-- 2. Import Śladów i Timeline -->
-    <div class="section">
-        <h3>2. Ślady i Oś Czasu (Maks. 3 Stemy + Nagranie)</h3>
-        <div id="multiTrackSection">
-            <!-- Ślad 1 -->
-            <div class="track-row" id="track-row-0">
-                <div class="track-info">
-                    <span class="track-title">Ślad 1 (np. Wokal / Melodia):</span>
-                    <input type="file" class="track-input" data-index="0" accept="audio/*">
-                    <div class="track-mix-controls">
-                        <button class="mix-btn mute-btn" id="mute-0" data-index="0">M</button>
-                        <button class="mix-btn solo-btn" id="solo-0" data-index="0">S</button>
-                        <div class="vol-slider-container">
-                            <span>Vol</span>
-                            <input type="range" class="vol-slider" id="vol-0" data-index="0" min="0" max="1" step="0.05" value="1">
+        <!-- 1. Import Śladów i Timeline -->
+        <div class="section">
+            <h3>Ślady i Oś Czasu</h3>
+            <div id="multiTrackSection">
+                <!-- Ślad 1 -->
+                <div class="track-row" id="track-row-0">
+                    <div class="track-info">
+                        <span class="track-title">Ślad 1 (np. Wokal / Melodia):</span>
+                        <input type="file" class="track-input" data-index="0" accept="audio/*">
+                        <div class="track-mix-controls">
+                            <button class="mix-btn mute-btn" id="mute-0" data-index="0">M</button>
+                            <button class="mix-btn solo-btn" id="solo-0" data-index="0">S</button>
+                            <div class="vol-slider-container">
+                                <span>Vol</span>
+                                <input type="range" class="vol-slider" id="vol-0" data-index="0" min="0" max="1"
+                                    step="0.05" value="1">
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="waveform-container" data-index="0">
-                    <canvas class="waveform-canvas" id="canvas-0"></canvas>
-                    <div class="playhead-overlay" id="playhead-0"></div>
-                    <div class="waveform-placeholder" id="placeholder-0">Wybierz plik audio...</div>
-                </div>
-            </div>
-
-            <!-- Ślad 2 -->
-            <div class="track-row" id="track-row-1">
-                <div class="track-info">
-                    <span class="track-title">Ślad 2 (np. Bas / Syntezator):</span>
-                    <input type="file" class="track-input" data-index="1" accept="audio/*">
-                    <div class="track-mix-controls">
-                        <button class="mix-btn mute-btn" id="mute-1" data-index="1">M</button>
-                        <button class="mix-btn solo-btn" id="solo-1" data-index="1">S</button>
-                        <div class="vol-slider-container">
-                            <span>Vol</span>
-                            <input type="range" class="vol-slider" id="vol-1" data-index="1" min="0" max="1" step="0.05" value="1">
-                        </div>
+                    <div class="waveform-container" data-index="0">
+                        <canvas class="waveform-canvas" id="canvas-0"></canvas>
+                        <div class="playhead-overlay" id="playhead-0"></div>
+                        <div class="waveform-placeholder" id="placeholder-0">Wybierz plik audio...</div>
                     </div>
                 </div>
-                <div class="waveform-container" data-index="1">
-                    <canvas class="waveform-canvas" id="canvas-1"></canvas>
-                    <div class="playhead-overlay" id="playhead-1"></div>
-                    <div class="waveform-placeholder" id="placeholder-1">Wybierz plik audio...</div>
-                </div>
-            </div>
 
-            <!-- Ślad 3 -->
-            <div class="track-row" id="track-row-2">
-                <div class="track-info">
-                    <span class="track-title">Ślad 3 (np. Gitara / Inne):</span>
-                    <input type="file" class="track-input" data-index="2" accept="audio/*">
-                    <div class="track-mix-controls">
-                        <button class="mix-btn mute-btn" id="mute-2" data-index="2">M</button>
-                        <button class="mix-btn solo-btn" id="solo-2" data-index="2">S</button>
-                        <div class="vol-slider-container">
-                            <span>Vol</span>
-                            <input type="range" class="vol-slider" id="vol-2" data-index="2" min="0" max="1" step="0.05" value="1">
+                <!-- Ślad 2 -->
+                <div class="track-row" id="track-row-1">
+                    <div class="track-info">
+                        <span class="track-title">Ślad 2 (np. Bas / Syntezator):</span>
+                        <input type="file" class="track-input" data-index="1" accept="audio/*">
+                        <div class="track-mix-controls">
+                            <button class="mix-btn mute-btn" id="mute-1" data-index="1">M</button>
+                            <button class="mix-btn solo-btn" id="solo-1" data-index="1">S</button>
+                            <div class="vol-slider-container">
+                                <span>Vol</span>
+                                <input type="range" class="vol-slider" id="vol-1" data-index="1" min="0" max="1"
+                                    step="0.05" value="1">
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="waveform-container" data-index="2">
-                    <canvas class="waveform-canvas" id="canvas-2"></canvas>
-                    <div class="playhead-overlay" id="playhead-2"></div>
-                    <div class="waveform-placeholder" id="placeholder-2">Wybierz plik audio...</div>
-                </div>
-            </div>
-
-            <!-- Ślad 4: Nagrany Instrument (domyślnie ukryty) -->
-            <div class="track-row" id="track-row-3" style="display: none; border-left: 4px solid #ff5e7e;">
-                <div class="track-info">
-                    <span class="track-title" style="color: #ff5e7e; font-weight: bold;">🔴 Nagrany Instrument:</span>
-                    <div class="track-mix-controls">
-                        <button class="mix-btn mute-btn" id="mute-3" data-index="3">M</button>
-                        <button class="mix-btn solo-btn" id="solo-3" data-index="3">S</button>
-                        <div class="vol-slider-container">
-                            <span>Vol</span>
-                            <input type="range" class="vol-slider" id="vol-3" data-index="3" min="0" max="1" step="0.05" value="1">
-                        </div>
+                    <div class="waveform-container" data-index="1">
+                        <canvas class="waveform-canvas" id="canvas-1"></canvas>
+                        <div class="playhead-overlay" id="playhead-1"></div>
+                        <div class="waveform-placeholder" id="placeholder-1">Wybierz plik audio...</div>
                     </div>
                 </div>
-                <div class="waveform-container" data-index="3">
-                    <canvas class="waveform-canvas" id="canvas-3"></canvas>
-                    <div class="playhead-overlay" id="playhead-3"></div>
-                    <div class="waveform-placeholder" id="placeholder-3">Nagranie puste</div>
+
+                <!-- Ślad 3 -->
+                <div class="track-row" id="track-row-2">
+                    <div class="track-info">
+                        <span class="track-title">Ślad 3 (np. Gitara / Inne):</span>
+                        <input type="file" class="track-input" data-index="2" accept="audio/*">
+                        <div class="track-mix-controls">
+                            <button class="mix-btn mute-btn" id="mute-2" data-index="2">M</button>
+                            <button class="mix-btn solo-btn" id="solo-2" data-index="2">S</button>
+                            <div class="vol-slider-container">
+                                <span>Vol</span>
+                                <input type="range" class="vol-slider" id="vol-2" data-index="2" min="0" max="1"
+                                    step="0.05" value="1">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="waveform-container" data-index="2">
+                        <canvas class="waveform-canvas" id="canvas-2"></canvas>
+                        <div class="playhead-overlay" id="playhead-2"></div>
+                        <div class="waveform-placeholder" id="placeholder-2">Wybierz plik audio...</div>
+                    </div>
+                </div>
+
+                <!-- Ślad 4 (Click Track) -->
+                <div class="track-row" id="track-row-3">
+                    <div class="track-info">
+                        <span class="track-title" style="color: #00ebc7; font-weight: bold;">🔔 Ślad 4 (Click
+                            Track):</span>
+                        <div style="margin-top: 5px; display: grid; grid-template-columns: 1fr 1fr; gap: 6px;">
+                            <div>
+                                <label
+                                    style="font-size: 0.7rem; color: #a5a5b5; display: block; margin-bottom: 2px;">Dźwięk</label>
+                                <select id="clickSoundSelect"
+                                    style="padding: 4px 6px; font-size: 0.8rem; height: auto;">
+                                    <option value="synth" selected>Cyfrowy</option>
+                                    <option value="rim">Rimshot</option>
+                                    <option value="cowbell">Cowbell</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label
+                                    style="font-size: 0.7rem; color: #a5a5b5; display: block; margin-bottom: 2px;">Offset
+                                    (s)</label>
+                                <input type="number" id="clickOffsetInput" value="0.00" step="0.01" min="-2.0" max="2.0"
+                                    style="padding: 4px 6px; font-size: 0.8rem; height: auto;">
+                            </div>
+                        </div>
+                        <div class="track-mix-controls">
+                            <button class="mix-btn mute-btn" id="mute-3" data-index="3">M</button>
+                            <button class="mix-btn solo-btn" id="solo-3" data-index="3">S</button>
+                            <div class="vol-slider-container">
+                                <span>Vol</span>
+                                <input type="range" class="vol-slider" id="vol-3" data-index="3" min="0" max="1"
+                                    step="0.05" value="0.8">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="waveform-container" data-index="3" id="clickWaveformContainer">
+                        <canvas class="waveform-canvas" id="canvas-3"></canvas>
+                        <div class="playhead-overlay" id="playhead-3"></div>
+                        <div class="waveform-placeholder" id="placeholder-3">Zezwól na Audio (Silnik DAW) aby
+                            wygenerować Klik...</div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- 3. Inteligentny Klik -->
-    <div class="section">
-        <h3>3. Inteligentny Click (Detektor)</h3>
-        <button id="analyzeBtn" disabled>Analizuj podkład i generuj Click</button>
-        <div style="margin-top: 10px;">
-            <label>Brzmienie:</label>
-            <select id="clickSound">
-                <option value="synth">Klasyczny Cyfrowy (Oscylator)</option>
-                <option value="rim">Modern Rimshot</option>
-                <option value="cowbell">Cowbell</option>
-            </select>
-        </div>
-        <div style="margin-top: 10px; font-size: 0.9rem;">
-            Wykryte Tempo: <strong id="detectedBpm" style="color:#00ebc7;">---</strong>
-        </div>
-        <div class="click-preview" id="clickTimeline">
-            <div style="color: #4c4c6d; text-align: center; line-height: 35px; font-size: 11px;">Podgląd siatki rytmicznej kliku</div>
-        </div>
-    </div>
+    <!-- Modal Opcji (Options Modal) -->
+    <div id="optionsModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <span id="closeModalBtn" class="close-modal-btn">&times;</span>
+            <h2
+                style="font-size: 1.4rem; border-bottom: 2px solid #232335; padding-bottom: 10px; margin-bottom: 15px; color: #00ebc7; text-align: center;">
+                ⚙️ Opcje & Narzędzia DAW</h2>
 
-    <!-- 4. Nagrywanie -->
-    <div class="section">
-        <h3>4. Rejestracja Audio</h3>
-        <button id="initAudio">Zezwól na Audio (Silnik DAW)</button>
-        <button id="startRec" disabled style="background:#ff5e7e; color:#fff;">🔴 Uruchom Nagrywanie</button>
-        <button id="stopRec" disabled>⏹️ Zatrzymaj (Stop)</button>
-        <span id="recStatus" class="status"></span>
-    </div>
+            <!-- Sekcja Wejść -->
+            <div class="modal-section" style="border-left-color: #00ebc7;">
+                <h3 style="font-size: 1rem; color: #fff; margin-top: 0; margin-bottom: 8px;">🔌 Urządzenia Wejściowe
+                    (Input)</h3>
+                <select id="audioInputDevice" style="font-size: 0.85rem; padding: 8px;">
+                    <option value="">Wczytywanie urządzeń...</option>
+                </select>
+            </div>
 
-    <!-- 5. Eksport -->
-    <div class="section" style="border-left-color: #ff5e7e;">
-        <h3>5. Eksport & Render</h3>
-        <button id="renderBtn" disabled>Renderuj Ślady + Instrument (Bez Clicka)</button>
-        <div id="downloadLinkSection"></div>
-    </div>
-</div>
+            <!-- Sekcja Rejestracji -->
+            <div class="modal-section" style="border-left-color: #ff5e7e;">
+                <h3 style="font-size: 1rem; color: #fff; margin-top: 0; margin-bottom: 8px;">🎙️ Rejestracja Audio</h3>
+                <div style="display: flex; gap: 10px; margin-bottom: 10px; align-items: center;">
+                    <select id="recordTargetTrack" style="flex: 2; font-size: 0.85rem; padding: 8px;">
+                        <option value="0">Nagraj na Ślad 1</option>
+                        <option value="1">Nagraj na Ślad 2</option>
+                        <option value="2">Nagraj na Ślad 3</option>
+                    </select>
+                    <button id="recordBtn" class="record-btn"
+                        style="flex: 1; background: #ff5e7e; color: #fff; font-weight: bold; margin-top: 0; padding: 8px 12px; font-size: 0.85rem;">🔴
+                        Nagraj</button>
+                </div>
+                <div id="recordingStatus" class="status"
+                    style="display: none; color: #ff5e7e; text-align: left; font-size: 0.85rem; text-shadow: 0 0 8px rgba(255,94,126,0.3);">
+                    🔴 Nagrywanie zsynchronizowane...</div>
+            </div>
 
-<!-- Podpięcie zewnętrznego pliku z logiką JS -->
-<script src="app.js"></script>
+            <!-- Sekcja Inteligentnego Klikania -->
+            <div class="modal-section" style="border-left-color: #00ebc7;">
+                <h3 style="font-size: 1rem; color: #fff; margin-top: 0; margin-bottom: 8px;">🧠 Inteligentny Click (BPM
+                    Detektor)</h3>
+                <button id="analyzeBtn" disabled style="padding: 8px 12px; font-size: 0.85rem;">Analizuj podkład i
+                    wykryj BPM</button>
+                <div style="margin-top: 10px; font-size: 0.85rem;">
+                    Wykryte Tempo: <strong id="detectedBpm" style="color:#00ebc7;">---</strong>
+                </div>
+                <div class="click-preview" id="clickTimeline" style="margin-top: 8px; height: 30px;">
+                    <div style="color: #4c4c6d; text-align: center; line-height: 30px; font-size: 10px;">Podgląd siatki
+                        rytmicznej kliku</div>
+                </div>
+            </div>
+
+            <!-- Sekcja Renderowania -->
+            <div class="modal-section" style="border-left-color: #ff5e7e; margin-bottom: 0;">
+                <h3 style="font-size: 1rem; color: #fff; margin-top: 0; margin-bottom: 8px;">💾 Eksport & Render</h3>
+                <button id="renderBtn" disabled style="padding: 8px 12px; font-size: 0.85rem;">Renderuj Ślady (z
+                    Clickem)</button>
+                <div id="downloadLinkSection" style="margin-top: 5px;"></div>
+            </div>
+        </div>
+
+        <!-- Podpięcie zewnętrznego pliku z logiką JS -->
+        <script src="app.js"></script>
 </body>
+
 </html>
